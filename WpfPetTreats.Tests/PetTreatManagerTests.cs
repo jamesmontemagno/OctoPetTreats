@@ -24,33 +24,33 @@ namespace WpfPetTreats.Tests
             // Arrange
             string title = "Test Title";
             string description = "Test Description";
-            var aMovie = new PetTreat
+            var aPetTreat = new PetTreat
             {
                 Title = title,
                 Description = description
             };
 
             // Act
-            var movieString = stateManager.Serialize(aMovie);
+            var petTreatString = stateManager.Serialize(aPetTreat);
 
             // Assert
-            Assert.NotNull(movieString);
-            Assert.IsNotEmpty(movieString);
+            Assert.NotNull(petTreatString);
+            Assert.IsNotEmpty(petTreatString);
         }
 
         [Test]
         public void Deserialize_ShouldCreateMovie()
         {
             // Arrange
-            var movieString = "AAEAAAD/////AQAAAAAAAAAMAgAAAD9XcGZNb3ZpZSwgVmVyc2lvbj0xLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwFAQAAABVXcGZNb3ZpZS5Nb2RlbHMuTW92aWUCAAAABXRpdGxlC2Rlc2NyaXB0aW9uAQECAAAABgMAAAAKVGVzdCBUaXRsZQYEAAAAEFRlc3QgRGVzY3JpcHRpb24L";
+            var petTreatString = "AAEAAAD/////AQAAAAAAAAAMAgAAAD9XcGZNb3ZpZSwgVmVyc2lvbj0xLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwFAQAAABVXcGZNb3ZpZS5Nb2RlbHMuTW92aWUCAAAABXRpdGxlC2Rlc2NyaXB0aW9uAQECAAAABgMAAAAKVGVzdCBUaXRsZQYEAAAAEFRlc3QgRGVzY3JpcHRpb24L";
             
             // Act
-            var newMovie = stateManager.Deserialize(movieString);
+            var netPetTreat = stateManager.Deserialize(petTreatString);
             
             // Assert
-            Assert.IsNotNull(newMovie);
-            Assert.AreEqual("Test Title", newMovie.Title);
-            Assert.AreEqual("Test Description", newMovie.Description);
+            Assert.IsNotNull(netPetTreat);
+            Assert.AreEqual("Test Title", netPetTreat.Title);
+            Assert.AreEqual("Test Description", netPetTreat.Description);
         }
 
         [Test]
@@ -59,20 +59,20 @@ namespace WpfPetTreats.Tests
             // Arrange
             string title = "Test Title";
             string description = "Test Description";
-            var aMovie = new PetTreat
+            var aPetTreat = new PetTreat
             {
                 Title = title,
                 Description = description
             };
 
             // Act
-            var movieString = stateManager.Serialize(aMovie);
-            var newMovie = stateManager.Deserialize(movieString);
+            var petTreatString = stateManager.Serialize(aPetTreat);
+            var newPetTreat = stateManager.Deserialize(petTreatString);
 
             // Assert
-            Assert.IsNotNull(newMovie);
-            Assert.AreEqual(aMovie.Title, newMovie.Title);
-            Assert.AreEqual(aMovie.Description, newMovie.Description);
+            Assert.IsNotNull(newPetTreat);
+            Assert.AreEqual(aPetTreat.Title, newPetTreat.Title);
+            Assert.AreEqual(aPetTreat.Description, newPetTreat.Description);
         }
     }
 }
