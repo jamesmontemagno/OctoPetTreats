@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WpfPetTreats.Models;
 
@@ -12,38 +12,27 @@ namespace WpfPetTreats.Services
     public class PetTreatManager
     {
         /// <summary>
-        /// Uses binaryFormatter to serialize the object, and return a string that is base64 encoded
+        /// Serializes the PetTreat object to a JSON string and returns it as base64 encoded string
         /// </summary>
-        /// <param name="anyMovie"></param>
-        /// <returns></returns>
-        public string Serialize(PetTreat anyMovie)
+        /// <param name="petTreat">The pet treat to serialize</param>
+        /// <returns>Base64 encoded JSON string</returns>
+        public string Serialize(PetTreat petTreat)
         {
-            var formatter = new BinaryFormatter();
-            using (var stream = new System.IO.MemoryStream())
-            {
-#pragma warning disable SYSLIB0011 // Type or member is obsolete
-                formatter.Serialize(stream, anyMovie);
-#pragma warning restore SYSLIB0011 // Type or member is obsolete
-                return Convert.ToBase64String(stream.ToArray());
-            }
-
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            string jsonString = JsonSerializer.Serialize(petTreat, options);
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(jsonString));
         }
 
         /// <summary>
-        /// Reverses the serialize operation to recreate a movie object
+        /// Deserializes a base64 encoded JSON string back to a PetTreat object
         /// </summary>
-        /// <param name="movieString"></param>
-        /// <returns></returns>
-        public PetTreat Deserialize(string movieString)
+        /// <param name="petTreatString">Base64 encoded JSON string</param>
+        /// <returns>The deserialized PetTreat object</returns>
+        public PetTreat Deserialize(string petTreatString)
         {
-            var formatter = new BinaryFormatter();
-            var bytes = Convert.FromBase64String(movieString);
-            using (var stream = new System.IO.MemoryStream(bytes))
-            {
-#pragma warning disable SYSLIB0011 // Type or member is obsolete
-                return (PetTreat)formatter.Deserialize(stream);
-#pragma warning restore SYSLIB0011 // Type or member is obsolete
-            }
+            var bytes = Convert.FromBase64String(petTreatString);
+            string jsonString = Encoding.UTF8.GetString(bytes);
+            return JsonSerializer.Deserialize<PetTreat>(jsonString);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace MvcPetTreats.Tests
             var result = controller.Welcome("test", 1);
 
             // assert
-            Assert.AreEqual("Hello test, ID: 1, you have visited: 0 times", result);
+            Assert.That(result, Is.EqualTo("Hello test, ID: 1, you have visited: 0 times"));
         }
     }
 }

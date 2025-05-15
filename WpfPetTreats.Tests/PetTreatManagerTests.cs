@@ -34,23 +34,25 @@ namespace WpfPetTreats.Tests
             var petTreatString = stateManager.Serialize(aPetTreat);
 
             // Assert
-            Assert.NotNull(petTreatString);
-            Assert.IsNotEmpty(petTreatString);
+            Assert.That(petTreatString, Is.Not.Null);
+            Assert.That(petTreatString, Is.Not.Empty);
         }
 
         [Test]
         public void Deserialize_ShouldCreateMovie()
         {
             // Arrange
-            var petTreatString = "AAEAAAD/////AQAAAAAAAAAMAgAAAD9XcGZNb3ZpZSwgVmVyc2lvbj0xLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwFAQAAABVXcGZNb3ZpZS5Nb2RlbHMuTW92aWUCAAAABXRpdGxlC2Rlc2NyaXB0aW9uAQECAAAABgMAAAAKVGVzdCBUaXRsZQYEAAAAEFRlc3QgRGVzY3JpcHRpb24L";
+            // Create a valid JSON-based Base64 string for a PetTreat
+            string jsonString = "{\n  \"Title\": \"Test Title\",\n  \"Description\": \"Test Description\"\n}";
+            string petTreatString = Convert.ToBase64String(Encoding.UTF8.GetBytes(jsonString));
             
             // Act
             var netPetTreat = stateManager.Deserialize(petTreatString);
             
             // Assert
-            Assert.IsNotNull(netPetTreat);
-            Assert.AreEqual("Test Title", netPetTreat.Title);
-            Assert.AreEqual("Test Description", netPetTreat.Description);
+            Assert.That(netPetTreat, Is.Not.Null);
+            Assert.That(netPetTreat.Title, Is.EqualTo("Test Title"));
+            Assert.That(netPetTreat.Description, Is.EqualTo("Test Description"));
         }
 
         [Test]
@@ -70,9 +72,9 @@ namespace WpfPetTreats.Tests
             var newPetTreat = stateManager.Deserialize(petTreatString);
 
             // Assert
-            Assert.IsNotNull(newPetTreat);
-            Assert.AreEqual(aPetTreat.Title, newPetTreat.Title);
-            Assert.AreEqual(aPetTreat.Description, newPetTreat.Description);
+            Assert.That(newPetTreat, Is.Not.Null);
+            Assert.That(newPetTreat.Title, Is.EqualTo(aPetTreat.Title));
+            Assert.That(newPetTreat.Description, Is.EqualTo(aPetTreat.Description));
         }
     }
 }

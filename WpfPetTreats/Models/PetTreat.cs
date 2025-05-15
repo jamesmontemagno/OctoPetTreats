@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace WpfPetTreats.Models
 {
-    [Serializable]
     public class PetTreat : INotifyPropertyChanged
     {
         private string title;
@@ -39,8 +39,7 @@ namespace WpfPetTreats.Models
             }
         }
 
-        [field: NonSerialized]
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
