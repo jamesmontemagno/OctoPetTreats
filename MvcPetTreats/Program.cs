@@ -5,7 +5,7 @@ using MvcPetTreats.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<MvcPetTreatsContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("MvcPetTreatsContext")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MvcPetTreatsContext")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
