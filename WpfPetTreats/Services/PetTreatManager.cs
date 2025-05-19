@@ -18,11 +18,14 @@ namespace WpfPetTreats.Services
         /// <returns></returns>
         public string Serialize(PetTreat anyMovie)
         {
-            var formatter = new BinaryFormatter();
+            // TODO: Replaced BinaryFormatter with System.Text.Json for serialization. This fix assumes the object is compatible with JSON serialization.
+            var options = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
             using (var stream = new System.IO.MemoryStream())
             {
 #pragma warning disable SYSLIB0011 // Type or member is obsolete
-                formatter.Serialize(stream, anyMovie);
+                var jsonString = System.Text.Json.JsonSerializer.Serialize(anyMovie, options);
+                var bytes = System.Text.Encoding.UTF8.GetBytes(jsonString);
+                stream.Write(bytes, 0, bytes.Length);
 #pragma warning restore SYSLIB0011 // Type or member is obsolete
                 return Convert.ToBase64String(stream.ToArray());
             }
@@ -36,12 +39,14 @@ namespace WpfPetTreats.Services
         /// <returns></returns>
         public PetTreat Deserialize(string movieString)
         {
-            var formatter = new BinaryFormatter();
+            // TODO: Replaced BinaryFormatter with System.Text.Json for deserialization. This fix assumes the object is compatible with JSON deserialization, but may not work with the current format.
+            var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             var bytes = Convert.FromBase64String(movieString);
             using (var stream = new System.IO.MemoryStream(bytes))
             {
 #pragma warning disable SYSLIB0011 // Type or member is obsolete
-                return (PetTreat)formatter.Deserialize(stream);
+                var jsonString = System.Text.Encoding.UTF8.GetString(stream.ToArray());
+                return System.Text.Json.JsonSerializer.Deserialize<PetTreat>(jsonString, options);
 #pragma warning restore SYSLIB0011 // Type or member is obsolete
             }
         }

@@ -42,7 +42,10 @@ namespace WpfPetTreats.Tests
         public void Deserialize_ShouldCreateMovie()
         {
             // Arrange
-            var petTreatString = "AAEAAAD/////AQAAAAAAAAAMAgAAAD9XcGZNb3ZpZSwgVmVyc2lvbj0xLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwFAQAAABVXcGZNb3ZpZS5Nb2RlbHMuTW92aWUCAAAABXRpdGxlC2Rlc2NyaXB0aW9uAQECAAAABgMAAAAKVGVzdCBUaXRsZQYEAAAAEFRlc3QgRGVzY3JpcHRpb24L";
+            // Create a JSON string and encode it to base64 for the new serialization approach
+            string jsonString = "{\"Title\":\"Test Title\",\"Description\":\"Test Description\"}";
+            var bytes = System.Text.Encoding.UTF8.GetBytes(jsonString);
+            var petTreatString = Convert.ToBase64String(bytes);
             
             // Act
             var netPetTreat = stateManager.Deserialize(petTreatString);
