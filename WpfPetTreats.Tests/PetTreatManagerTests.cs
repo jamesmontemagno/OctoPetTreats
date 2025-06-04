@@ -39,7 +39,7 @@ namespace WpfPetTreats.Tests
         }
 
         [Test]
-        public void Deserialize_ShouldCreateMovie()
+        public void Deserialize_ShouldCreatePetTreat()
         {
             // Arrange
             var petTreatString = "AAEAAAD/////AQAAAAAAAAAMAgAAAD9XcGZNb3ZpZSwgVmVyc2lvbj0xLjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwFAQAAABVXcGZNb3ZpZS5Nb2RlbHMuTW92aWUCAAAABXRpdGxlC2Rlc2NyaXB0aW9uAQECAAAABgMAAAAKVGVzdCBUaXRsZQYEAAAAEFRlc3QgRGVzY3JpcHRpb24L";

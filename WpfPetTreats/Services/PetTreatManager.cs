@@ -14,15 +14,15 @@ namespace WpfPetTreats.Services
         /// <summary>
         /// Uses binaryFormatter to serialize the object, and return a string that is base64 encoded
         /// </summary>
-        /// <param name="anyMovie"></param>
+        /// <param name="anyPetTreat"></param>
         /// <returns></returns>
-        public string Serialize(PetTreat anyMovie)
+        public string Serialize(PetTreat anyPetTreat)
         {
             var formatter = new BinaryFormatter();
             using (var stream = new System.IO.MemoryStream())
             {
 #pragma warning disable SYSLIB0011 // Type or member is obsolete
-                formatter.Serialize(stream, anyMovie);
+                formatter.Serialize(stream, anyPetTreat);
 #pragma warning restore SYSLIB0011 // Type or member is obsolete
                 return Convert.ToBase64String(stream.ToArray());
             }
@@ -30,14 +30,14 @@ namespace WpfPetTreats.Services
         }
 
         /// <summary>
-        /// Reverses the serialize operation to recreate a movie object
+        /// Reverses the serialize operation to recreate a pet treat object
         /// </summary>
-        /// <param name="movieString"></param>
+        /// <param name="petTreatString"></param>
         /// <returns></returns>
-        public PetTreat Deserialize(string movieString)
+        public PetTreat Deserialize(string petTreatString)
         {
             var formatter = new BinaryFormatter();
-            var bytes = Convert.FromBase64String(movieString);
+            var bytes = Convert.FromBase64String(petTreatString);
             using (var stream = new System.IO.MemoryStream(bytes))
             {
 #pragma warning disable SYSLIB0011 // Type or member is obsolete
